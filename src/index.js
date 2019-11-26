@@ -12,7 +12,7 @@ const app = express()
 app.use(express.json())
 app.use(userRouter)
 app.use(taskRouter)
-
+ 
 
 
 app.listen(port, () => {
@@ -20,12 +20,3 @@ app.listen(port, () => {
 })
 
 
-const jwt = require('jsonwebtoken')
-
-const myFunction = async()=>{
-    const token=jwt.sign({_id:'abc123'},'thisisanewhobby')
-    console.log(token)
-    const data = jwt.verify(token,"thisisanewhobby")
-    console.log(data)
-}
-// myFunction()
