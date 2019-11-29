@@ -19,6 +19,13 @@ const userSchema = new mongoose.Schema({
             }
         }
     },
+    avatar: {
+        type: Buffer,
+        required:false,
+        default:0
+    },
+    
+    
     email: {
         type: String,
         required: true,
@@ -37,6 +44,7 @@ const userSchema = new mongoose.Schema({
             required:true
         }
     }],
+    
     password: {
         type: String,
         required: true,
@@ -48,10 +56,8 @@ const userSchema = new mongoose.Schema({
             }
         }
 
-    },
-    avatar:{
-        type:Buffer
     }
+    
 },{
     timestamps:true
 })
@@ -73,6 +79,7 @@ userSchema.methods.toJSON = function(){
     console.log(userObject)
     delete userObject.password
     delete userObject.tokens
+    delete userObject.avatar
     return userObject
 }
 userSchema.statics.findByCredentials = async (email,password)=>{
@@ -89,7 +96,7 @@ userSchema.statics.findByCredentials = async (email,password)=>{
 }
 userSchema.pre('save', async function(next){
     const user = this
-    console.log("just before saving")
+    //console.log("just before saving")
     if(user.isModified('password')){
         user.password = await bcrypt.hash(user.password,8)
     }
